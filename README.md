@@ -1,6 +1,15 @@
 # InstaContestWinner
-I've made this "bot" for auto-commenting on instagram. It's not the most elegant approach, but it's my first standalone Python project.
+# Instagram bot whose purpose is to auto-comment on a single instagram post.
 
-It uses openpyxl and Selenium.
+It uses OpenPyXL to draw from a list of comments in a .xslx file, then with Selenium in logs into Instagram and comments in the specified post's URL.
 
-It works by randomly choosing a comment from the .xlsx file, copying it, opening the browser and then pasting it in the comment box. It then waits from 20 to 25 seconds to draw another one in order to prevent Instagram from blocking your comments or shadowbanning you.
+# Usage:
+
+  - Download the program
+  - Download firefox
+  - Download the latest geckodriver for firefox https://github.com/mozilla/geckodriver/releases
+  - Create a spreadsheet, and write the comments you want the bot to draw from in A1 through A14
+  - Fill the required info in the script (username, password, spreadsheet filename, contest URL)
+  - Run it
+
+Feel free to add any functionality
