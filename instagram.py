@@ -1,88 +1,171 @@
-import pyautogui
 import random
+import openpyxl
+import pyperclip
+from selenium import webdriver
+import time
 
-i=0
+username = "**REPLACE WITH YOUR USERNAME**"
+password = "**REPLACE WITH YOUR PW**"
+getdriver = ("https://www.instagram.com/accounts/login/")
+concurso = ("https://www.instagram.com/****REPLACE WITH CONTEST URL****")
+driver = webdriver.Firefox()                                                        #opens firefox
+driver.get(getdriver)                                                               #opens url login
+time.sleep(5)                                                                       #timer to account for slow internet speed
+driver.find_element_by_xpath("//input[@name='username']").send_keys(username)       #enters username
+driver.find_element_by_xpath("//input[@name='password']").send_keys(password)       #enters password
+driver.find_element_by_css_selector(".L3NKy > div:nth-child(1)").click()            #clicks login
+time.sleep(5)                                                                       #timer to account for slow internet speed
+driver.get(concurso)                                                                #goes to contest URL
 
-def accion():
-    pyautogui.hotkey('ctrl', 'c')                                    #Copia la celda
-    pyautogui.click(x=588, y=1751, duration = 3)  #Abre Brave
-    pyautogui.click(x=1912, y=1350, duration= 3)  #Click en add a comment
-    pyautogui.hotkey('ctrl', 'v')                                    #Pega la celda
-    pyautogui.click(x=2216, y=1351, duration= random.randint(25,30))  #Click en post
+wb = openpyxl.load_workbook('**REPLACE WITH YOUR WORKBOOK NAME**.xlsx')             #opens workbook
+sheet = wb['Sheet1']                                                                #activates sheet
+i = 0                                                                               #set i to 0 to start counter
 
-while i < 30:
-    randNum = random.randint(0, 13)
-    print(randNum)
+while i < 15:                                                                       #number of comments to comment.
+    
+    randNum = random.randint(0,13)                                                  #picks random number from 0 to 13, which is the comment to use for each i
     
     if randNum == 0:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=272, y=574, duration=1)   #click celda a1
-\        accion()
+        comment = sheet['A1']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 1:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=305, y=616, duration=1)   #click celda a2
-        accion()
+        comment = sheet['A2']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 2:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=304, y=666, duration=1)   #click celda a3
-        accion()
+        comment = sheet['A3']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 3:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=200, y=707, duration=1)   #click celda a4
-        accion()
+        comment = sheet['A4']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 4:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=200, y=751, duration=1)   #click celda a5
-        accion()
+        comment = sheet['A5']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 5:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=200, y=795, duration=1)   #click celda a6
-        accion()
+        comment = sheet['A6']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 6:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=200, y=839, duration=1)   #click celda a7
-        accion()
+        comment = sheet['A7']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 7:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=318, y=903, duration=1)   #click celda a8
-        accion()
+        comment = sheet['A8']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 8:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=305, y=949, duration=1)   #click celda a9
-        accion()
+        comment = sheet['A9']                                                       #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 9:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=335, y=997, duration=1)   #click celda a10
-        accion()
+        comment = sheet['A10']                                                      #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 10:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=409, y=1050, duration=1)  #click celda a11
-        accion()
+        comment = sheet['A11']                                                      #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 11:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=522, y=1103, duration=1)  #click celda a12
-        accion()
+        comment = sheet['A12']                                                      #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 12:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=480, y=1139, duration=1)  #click celda a13
-        accion()
+        comment = sheet['A13']                                                      #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     elif randNum == 13:
-        pyautogui.click(x=285, y=1768, duration=1)  #click excel
-        pyautogui.click(x=452, y=1195, duration=1)  #click celda a14
-        accion()
+        comment = sheet['A14']                                                      #selects comment
+        pyperclip.copy(comment.value)                                               #copies comment
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.click()                                                         #click comment box
+        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
+        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         i = i + 1
+        time.sleep(120) 
     else:
-        print('No salio ningun numero')
+        print('Error')                                                              #In case of unexpected error
+else:
+    print('The number of comments specified has been reached.')
