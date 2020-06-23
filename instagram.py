@@ -10,7 +10,7 @@ class InstaWinner():
     n = 0
 
     def __init__(self, *args, **kwargs):
-        self.driver = webdriver.Firefox()                                                        #opens firefox
+        self.driver                                                        #opens firefox
         print("Welcome to the Instagram Contest Winner.\nPlease fill the following info:")
         username = input("\n\nUsername: ")
         password = input("\nPassword: ")
