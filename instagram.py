@@ -1,200 +1,64 @@
-import random
-import openpyxl
-import pyperclip
+import random, openpyxl, pyperclip, time, sys
 from selenium import webdriver
-import time
-import sys
 
-username = "" #FILL USERNAME
-password = "" #FILL PASSWORD
-getdriver = ("https://www.instagram.com/accounts/login/")
-contest = ("") #FILL CONTEST URL
-driver = webdriver.Firefox()                                                        #opens firefox
-driver.get(getdriver)                                                               #opens url login
-time.sleep(5)                                                                       #timer to account for slow internet speed
-driver.find_element_by_xpath("//input[@name='username']").send_keys(username)       #enters username
-driver.find_element_by_xpath("//input[@name='password']").send_keys(password)       #enters password
-driver.find_element_by_css_selector(".L3NKy > div:nth-child(1)").click()            #clicks login
-time.sleep(5)                                                                       #timer to account for slow internet speed
-driver.get(contest)                                                                #goes to contest URL
+class InstaWinner():
+    username = ""
+    password = ""
+    contest = ("")
+    sheet = ""
+    driver = webdriver.Firefox()
+    n = 0
 
-wb = openpyxl.load_workbook('.xlsx') #FILL WORKBOOK FILENAME
-sheet = wb['Sheet1']                                                                #activates sheet
-n = 0                                                                               #set i to 0 to start counter
+    def __init__(self, *args, **kwargs):
+        self.driver = webdriver.Firefox()                                                        #opens firefox
+        print("Welcome to the Instagram Contest Winner.\nPlease fill the following info:")
+        username = input("\n\nUsername: ")
+        password = input("\nPassword: ")
+        contest_url = input("\nContest URL: ")
+        n = input("\nQuantity of comments to make: ")
+        spread = input("\nSpreadsheet name: ")
+        self.setUp(username,password,contest_url,n,spread)
 
-while n < 150:                                                                       #number of comments to comment.
-    print('//////////////////LOG/////////////////')
-    randNum = random.randint(0,13)                                                  #picks random number from 0 to 13, which is the comment to use for each i
-    time_between_comments = random.randint(100,200)
-    if randNum == 0:
-        comment = sheet['A1']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+    def setUp(self, username, password, contest_url, n, spread):
+        self.username = username
+        self.password = password
+        self.contest = contest_url
+        self.workbook = openpyxl.load_workbook(spread + '.xlsx')
+        self.sheet = self.workbook['Sheet1']
+        self.n = n
+        self.driver.get("https://www.instagram.com/accounts/login/")
+        time.sleep(5)                                                                       #timer to account for slow internet speed
+        self.driver.find_element_by_xpath("//input[@name='username']").send_keys(username)       #enters username
+        self.driver.find_element_by_xpath("//input[@name='password']").send_keys(password)       #enters password
+        self.driver.find_element_by_css_selector(".L3NKy > div:nth-child(1)").click()            #clicks login
+        time.sleep(10)
+        self.driver.get(self.contest)
+        time.sleep(5)                                                                       #timer to account for slow internet speed
+        self.work()
+
+    def getRandomCommentContent(self):
+        randNum = random.randint(0,13)                                                  #picks random number from 0 to 13, which is the comment to use for each i
+        return [self.sheet['A' + str(randNum + 1)].value, str(randNum)]
+
+    def postComment(self):
+        print('//////////////////LOG/////////////////')
+        time_between_comments = random.randint(100,200)
+        comment = self.getRandomCommentContent()                                    #selects comment
+        pyperclip.copy(comment[0])                                               #copies comment
+        commentArea = self.driver.find_element_by_class_name('Ypffh')                    #find comment box
         commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea = self.driver.find_element_by_class_name('Ypffh')                    #find comment box
         commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
+        self.driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
+        print('The number is ' + comment[1] + ', and the comment is: ' + comment[0])
         print('I will comment again in ' + str(time_between_comments) + ' seconds')
         time.sleep(time_between_comments)
-    elif randNum == 1:
-        comment = sheet['A2']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 2:
-        comment = sheet['A3']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 3:
-        comment = sheet['A4']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 4:
-        comment = sheet['A5']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 5:
-        comment = sheet['A6']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 6:
-        comment = sheet['A7']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 7:
-        comment = sheet['A8']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 8:
-        comment = sheet['A9']                                                       #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 9:
-        comment = sheet['A10']                                                      #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 10:
-        comment = sheet['A11']                                                      #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds')
-        time.sleep(time_between_comments)
-    elif randNum == 11:
-        comment = sheet['A12']                                                      #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds.')
-        time.sleep(time_between_comments)
-    elif randNum == 12:
-        comment = sheet['A13']                                                      #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds.')
-        time.sleep(time_between_comments)
-    elif randNum == 13:
-        comment = sheet['A14']                                                      #selects comment
-        pyperclip.copy(comment.value)                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
-        commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
-        n = n + 1
-        print('The number is ' + str(randNum) + ', and the comment is: ' + str(pyperclip.paste()))
-        print('I will comment again in ' + str(time_between_comments) + ' seconds.')
-        time.sleep(time_between_comments)
-    else:
-        print('Error')                                                              #In case of unexpected error
-else:
-    print('The number of comments specified has been reached.')
+
+    def work(self):
+        i = 0
+        while (i < int(self.n)):
+            self.postComment()
+            i += 1
+        print('The specified number of comments has been reached.')
+
+iw = InstaWinner()
