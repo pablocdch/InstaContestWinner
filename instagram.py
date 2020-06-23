@@ -23,13 +23,15 @@ class InstaWinner():
         self.username = username
         self.password = password
         self.contest = contest_url
-        self.sheet = openpyxl.load_workbook(spread + '.xlsx')[0]
+        self.workbook = openpyxl.load_workbook(spread + '.xlsx')
+        self.sheet = self.workbook['Sheet1']
         self.n = n
         self.driver.get("https://www.instagram.com/accounts/login/")
         time.sleep(5)                                                                       #timer to account for slow internet speed
         self.driver.find_element_by_xpath("//input[@name='username']").send_keys(username)       #enters username
         self.driver.find_element_by_xpath("//input[@name='password']").send_keys(password)       #enters password
         self.driver.find_element_by_css_selector(".L3NKy > div:nth-child(1)").click()            #clicks login
+        time.sleep(10)
         self.driver.get(self.contest)
         time.sleep(5)                                                                       #timer to account for slow internet speed
         self.work()
@@ -54,7 +56,7 @@ class InstaWinner():
 
     def work(self):
         i = 0
-        while (i < self.n):
+        while (i < int(self.n)):
             self.postComment()
             i += 1
         print('The specified number of comments has been reached.')
