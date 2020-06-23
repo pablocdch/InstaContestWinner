@@ -9,7 +9,10 @@ It uses OpenPyXL to draw from a list of comments in a .xslx file, then with Sele
   - Download firefox
   - Download the latest geckodriver for firefox https://github.com/mozilla/geckodriver/releases
   - Create a spreadsheet, and write the comments you want the bot to draw from in the cells A1 through A14 in Sheet1
-  - Enter required info (username, password, contest URL, amount of comments, spreadsheet name)
   - Run it
+  - Enter required info (username, password, contest URL, amount of comments, spreadsheet name)
 
 Feel free to add any extra functionality
+
+# Pending:
+Read current amount of comments in post and calculate probability of winning based on amount of comments by the user
