@@ -43,11 +43,11 @@ class InstaWinner():
         time_between_comments = random.randint(100,200)
         comment = self.getRandomCommentContent()                                    #selects comment
         pyperclip.copy(comment[0])                                               #copies comment
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea = self.driver.find_element_by_class_name('Ypffh')                    #find comment box
         commentArea.click()                                                         #click comment box
-        commentArea = driver.find_element_by_class_name('Ypffh')                    #find comment box
+        commentArea = self.driver.find_element_by_class_name('Ypffh')                    #find comment box
         commentArea.send_keys(pyperclip.paste())                                    #pastes comment in comment box
-        driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
+        self.driver.find_element_by_css_selector("button.y3zKF:nth-child(2)").click()    #clicks post
         print('The number is ' + comment[1] + ', and the comment is: ' + comment[0])
         print('I will comment again in ' + str(time_between_comments) + ' seconds')
         time.sleep(time_between_comments)
